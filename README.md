@@ -17,7 +17,7 @@ Signal harbinger = (tsd left)
                     :> (tir right)
                     :> (tsd right)
 ```
-(:>) stands for "followed by". 
+`(:>)` stands for "followed by". 
 
 This is a real example of a specification for a type of biological element called a DNA transposon (sub-class "Harbinger"). The signal specifications can involve basic (or complex) string algorithms like KMP search, palindrome search, dynamic programming (local, global alignment), etc., or some machine learning algorithms like Hidden Markov Models, etc. In the example above, the Pfam protein domains are specified using "Profile Hidden Markov Models" (PHMM). 
 
@@ -38,4 +38,12 @@ I have implemented the DSL using a naive approach (**biodsl.hs**) and tried impl
 
 In the second strategy, I have implemented this naive DSL using monadic modular approach (**mbiodsl.hs**). By defining the output type of `findFeature` as an `Identity` monad, wrapped by an `ErrorT` transformer, it becomes easy to handle the cases when the signals are not found and when this information should be propagated through the combinators. It reduces a lot of pattern matching under the hood. 
 
-I would like to take this project forward by implementing the combinators within a monadic framework, to improve the functionality and modularity. But due to time constraints, I have presented only till this implementation. 
+I would like to take this project forward by implementing the combinators within the monadic framework, to improve the functionality and modularity. But due to time constraints, I have presented only till this implementation. 
+
+Advantages of modular monadic approach:
+- It is easy to plug-in a certain type of language feature or side-effect using monad transformers, when they are available. 
+- The flow of information is intuitive and clear. 
+
+Disadvantages of modular monadic approach:
+- Implementing some new monad transformers could involve a lot of plumbing under the hood. 
+
